@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>P. K. Mohanty</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Prof. Pradeep Kumar Mohanty, Department of Physical Sciences, IISER Kolkata. Non-equilibrium statistical physics and its applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column with a lattice-gas band under the masthead; sections keyed by a left label rail on wide screens. */
+:root{
+  --paper:#f5f7f6; --surface:#ffffff; --ink:#15212a; --muted:#56656f; --rule:#d5dedd;
+  --accent:#0f6e6a; --accent-soft:#d8ecea; --particle:#15212a; --particle-hot:#0f6e6a;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0f1619; --surface:#151f23; --ink:#e3ecea; --muted:#9aaaae; --rule:#2a3a3e;
+  --accent:#5cc3bb; --accent-soft:#16312f; --particle:#c9d6d4; --particle-hot:#5cc3bb; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f1619; --surface:#151f23; --ink:#e3ecea; --muted:#9aaaae; --rule:#2a3a3e;
+  --accent:#5cc3bb; --accent-soft:#16312f; --particle:#c9d6d4; --particle-hot:#5cc3bb; color-scheme:dark}
+
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+.label{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* nav */
+nav.top{border-bottom:1px solid var(--rule)}
+nav.top .wrap{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem;align-items:center;justify-content:space-between;padding-block:.85rem}
+nav.top .brand{font-family:var(--display);font-weight:600;font-size:1rem;color:var(--ink);text-decoration:none}
+nav.top ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem 1rem}
+nav.top ul a{font-family:var(--mono);font-size:.78rem;color:var(--muted);text-decoration:none}
+nav.top ul a:hover{color:var(--accent)}
+
+/* masthead */
+.mast .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem;align-items:end;padding-block:3rem 2rem}
+.mast h1{font-size:clamp(2.2rem,5.5vw,3.9rem);font-weight:700;letter-spacing:-.02em}
+.mast .role{font-size:1.15rem;margin:.9rem 0 0;max-width:38rem}
+.mast .role strong{font-weight:600}
+.mast .thesis{color:var(--muted);margin:.6rem 0 0;max-width:38rem;font-style:italic}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+.btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.8rem;padding:.5rem .85rem;border:1px solid var(--rule);border-radius:999px;color:var(--ink);text-decoration:none;background:var(--surface);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.primary:hover{color:var(--paper);filter:brightness(1.08)}
+.portrait{width:168px;aspect-ratio:357/460;max-width:100%;object-fit:cover;border-radius:6px;display:block;filter:saturate(.9)}
+
+/* lattice band */
+.lattice{border-block:1px solid var(--rule);background:var(--surface)}
+.lattice .wrap{padding-block:1rem .75rem}
+.lattice canvas{display:block;width:100%;height:120px}
+.lattice .cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;margin-top:.5rem}
+.lattice button{font:inherit;background:none;border:0;color:var(--accent);cursor:pointer;padding:0}
+
+/* sections */
+section{border-bottom:1px solid var(--rule)}
+section > .wrap{display:grid;grid-template-columns:180px minmax(0,1fr);gap:1.5rem 2.5rem;padding-block:3rem}
+section h2{font-size:1.45rem;font-weight:600}
+section .side .label{display:block;margin-top:.5rem}
+.prose{max-width:42rem}
+.prose p{margin:0 0 1rem}
+
+/* themes grid */
+.themes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.75rem 2rem;margin-top:1.75rem}
+.theme h3{font-size:1.05rem;font-weight:600;margin-bottom:.35rem}
+.theme p{margin:0;font-size:.98rem;color:var(--ink)}
+.theme .refs{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:.45rem}
+
+/* timeline */
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.tl li{display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:1rem;padding:.6rem 0;border-top:1px solid var(--rule)}
+.tl li:first-child{border-top:0}
+.tl .when{font-family:var(--mono);font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:.15rem}
+.tl .what strong{font-weight:600}
+.tl li.now .when{color:var(--accent)}
+
+/* publications */
+.pubs{list-style:none;margin:0;padding:0;counter-reset:p}
+.pubs li{padding:.85rem 0;border-top:1px solid var(--rule)}
+.pubs li:first-child{border-top:0;padding-top:0}
+.pubs .t{font-weight:600}
+.pubs .a{color:var(--muted);font-size:.95rem}
+.pubs .v{font-family:var(--mono);font-size:.78rem;color:var(--ink)}
+.pubs .v em{font-style:normal;color:var(--accent)}
+.yr{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;color:var(--muted);margin:1.6rem 0 .3rem;text-transform:uppercase}
+.yr:first-child{margin-top:0}
+.more{margin-top:1.25rem}
+.pubtools{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-bottom:1.5rem}
+.pubtools label{flex-basis:100%}
+.pubtools input{flex:1 1 16rem;min-width:0;font:inherit;font-size:1rem;padding:.55rem .8rem;border:1px solid var(--rule);border-radius:6px;background:var(--surface);color:var(--ink)}
+.pubtools input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.pubs a.t{color:var(--ink);text-decoration:none;font-weight:600}
+.pubs a.t:hover{color:var(--accent);text-decoration:underline}
+.pubs .a b{font-weight:600;color:var(--ink)}
+.yr .ct{color:var(--accent);margin-left:.35rem}
+.pre{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;padding:.05rem .4rem;border-radius:999px;background:var(--accent-soft);color:var(--ink);margin-right:.3rem}
+
+
+/* talks */
+.talks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.talk{display:flex;flex-direction:column;gap:.35rem;padding:1rem 1.1rem;border:1px solid var(--rule);border-radius:6px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.talk:hover{border-color:var(--accent)}
+.talk .ttl{font-family:var(--display);font-weight:600;font-size:1.02rem;line-height:1.3}
+.talk .meta{font-size:.92rem;color:var(--muted)}
+.talk .go{font-family:var(--mono);font-size:.75rem;color:var(--accent);margin-top:auto}
+.series{margin-top:1.5rem;display:grid;gap:1rem}
+.series .talk .parts{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.25rem}
+.series .talk .parts a{font-family:var(--mono);font-size:.75rem;padding:.2rem .55rem;border:1px solid var(--rule);border-radius:999px;text-decoration:none}
+.series .talk .parts a:hover{border-color:var(--accent)}
+.h3sub{font-size:1rem;font-weight:600;margin:2rem 0 .75rem}
+
+/* people */
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem}
+.people{list-style:none;margin:.5rem 0 0;padding:0;display:grid;gap:.55rem}
+.people li{font-size:.97rem}
+.people .n{font-weight:600}
+.people .yrp{font-family:var(--mono);font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.people .now{color:var(--muted)}
+
+/* teaching / service */
+.kv{display:grid;gap:1.25rem}
+.kv h3{font-size:1rem;font-weight:600;margin-bottom:.3rem}
+.kv p{margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}
+.chip{font-family:var(--mono);font-size:.75rem;padding:.2rem .55rem;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem 2rem}
+.contact address{font-style:normal}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem}
+.mail code{font-family:var(--mono);font-size:.95rem;user-select:all;background:var(--accent-soft);padding:.2rem .5rem;border-radius:4px;overflow-wrap:anywhere}
+.toast{font-family:var(--mono);font-size:.75rem;color:var(--accent)}
+
+footer .wrap{padding-block:2rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem}
+
+@media (max-width:760px){
+  .mast .wrap{grid-template-columns:1fr;padding-block:2rem 1.5rem}
+  .portrait{width:120px;order:-1}
+  section > .wrap{grid-template-columns:1fr;gap:1rem;padding-block:2.25rem}
+  .themes,.talks,.cols,.contact{grid-template-columns:1fr}
+  .tl li{grid-template-columns:1fr;gap:.1rem}
+  nav.top ul{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+<style>body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
+</head>
+<body>
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">P. K. Mohanty</a>
+    <ul>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#talks">Talks</a></li>
+      <li><a href="#group">Students</a></li>
+      <li><a href="#career">Career</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="mast" id="top">
+  <div class="wrap">
+    <div>
+      <div class="label">Department of Physical Sciences · IISER Kolkata</div>
+      <h1 style="margin-top:.6rem">Pradeep Kumar Mohanty</h1>
+      <p class="role"><strong>Professor of Physics.</strong> I work on non-equilibrium statistical physics and its applications, particularly to biophysics.</p>
+      <p class="thesis">Absorbing-state transitions and self-organized criticality, thermodynamics away from equilibrium, active matter, hyperuniformity, and exactly solvable lattice models.</p>
+      <div class="links">
+        <a class="btn primary" href="https://scholar.google.com/citations?hl=en&amp;user=CHrmyQIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar ↗</a>
+        <a class="btn" href="https://physics.iiserkol.ac.in/fac_hompage.php?did=UDUzamovdlFMR1NSSTRxVnd1THI2c2pKeFJHZnNkQVJOWmFheXN5eWdXdz0=" target="_blank" rel="noopener">IISER Kolkata profile ↗</a>
+        <a class="btn" href="#contact">Contact</a>
+      </div>
+    </div>
+    <img class="portrait" src="photo.jpg" alt="Portrait of Pradeep Kumar Mohanty" width="168" height="216">
+  </div>
+</header>
+
+<div class="lattice" aria-label="Animated lattice of run-and-tumble particles">
+  <div class="wrap">
+    <canvas id="lg" aria-hidden="true"></canvas>
+    <div class="cap">
+      <span class="label">Run-and-tumble particles with hard-core exclusion on a lattice</span>
+      <span class="label"><button id="lgToggle" type="button">Pause</button></span>
+    </div>
+  </div>
+</div>
+
+<section id="research">
+  <div class="wrap">
+    <div class="side"><h2>Research</h2><span class="label">Themes</span></div>
+    <div>
+      <div class="prose">
+        <p>My group studies how collective behaviour emerges in systems driven away from equilibrium, where detailed balance fails and familiar thermodynamic tools no longer apply directly. We combine exact solutions of lattice models, scaling theory and large-scale simulation, and we carry these ideas into problems from biology.</p>
+      </div>
+      <div class="themes">
+        <div class="theme">
+          <h3>Self-organized criticality and absorbing transitions</h3>
+          <p>Absorbing phase transitions beyond directed percolation and their link to SOC. We showed that fixed-energy sandpiles belong to the directed percolation class, that SOC criticality is controlled by dissipation, and that sandpiles connect firmly to linear interface models.</p>
+          <div class="refs">PRL 2002 · PRL 2012 · EPL 2014 · PRE 2016</div>
+        </div>
+        <div class="theme">
+          <h3>Non-equilibrium thermodynamics</h3>
+          <p>For conserved systems with short-range correlations an additive free-energy function always exists, which explains the Gamma-like mass distributions seen in mass-transport models. We also derived a condition for a zeroth law between steady states in contact, and found position–momentum uncertainty Δx Δp ≥ |ℓ|/2 in classical systems with conserved angular momentum.</p>
+          <div class="refs">PRL 2014 · PRE 2015 · PRE 2025</div>
+        </div>
+        <div class="theme">
+          <h3>Motility-induced phase separation</h3>
+          <p>Lattice models of run-and-tumble particles show that MIPS cannot occur in one dimension, that motility hinders clustering under attraction, and that translational diffusion is essential. Together these results place MIPS in the Ising super-universality class.</p>
+          <div class="refs">SciPost Phys 2023 · PRB 2023 · JSTAT 2024 · Soft Matter 2024</div>
+        </div>
+        <div class="theme">
+          <h3>Hyperuniformity</h3>
+          <p>States that are disordered at small scales but ordered at large ones, where the variance of a local observable grows as V<sup>α</sup> with 0 &lt; α &lt; 1. We have found hyperuniformity in self-organized critical systems and in the critical Ashkin–Teller model, and studied percolation of hyperuniform configurations.</p>
+          <div class="refs">PRE 2016 · JPCM 2024 · PRE 2025</div>
+        </div>
+        <div class="theme">
+          <h3>Exactly solvable lattice models</h3>
+          <p>Finite-range processes, asymmetric hopping and assisted-exchange models with exact steady states. They show unusual correlations, current reversal with increasing density, negative differential mobility and phase separation, even in one dimension.</p>
+          <div class="refs">PRE 2015 · JSTAT 2017 · PRE 2018</div>
+        </div>
+        <div class="theme">
+          <h3>Biological networks and spinal cord injury</h3>
+          <p>Protein interaction networks of wild-type and mutant HTT and TP53 reveal modules whose functions may be lost or gained by mutation. With clinicians we analyse cerebrospinal fluid proteins after spinal cord injury and propose candidates that could hasten recovery.</p>
+          <div class="refs">PLoS ONE 2013 · PLoS ONE 2014 · Mol. Cell. Biochem. 2016</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <div class="side"><h2>Publications</h2><span class="label">78 articles · from Google Scholar</span></div>
+    <div>
+      <div class="pubtools">
+        <label class="label" for="pubSearch">Search titles, authors or journals</label>
+        <input id="pubSearch" type="search" placeholder="e.g. sandpile, hyperuniform, Phys. Rev. Lett." autocomplete="off">
+        <span class="label" id="pubCount" aria-live="polite">78 articles</span>
+      </div>
+      <div id="pubList">
+<div class="yrgroup" data-year="2026"><div class="yr">2026 <span class="ct">3</span></div><ul class="pubs">
+<li data-s="absorbing phase transitions with memory in critical scaling k. chhajed, p. k. mohanty phys. rev. research 8, 023156"><a class="t" href="https://scholar.google.com/scholar?q=%22Absorbing%20phase%20transitions%20with%20memory%20in%20critical%20scaling%22" target="_blank" rel="noopener">Absorbing phase transitions with memory in critical scaling</a><div class="a">K. Chhajed, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. Research 8, 023156</em> (2026)</div></li>
+<li data-s="critical scaling and supercritical coarsening in active model b+ a. bhowmick, p. k. mohanty phys. rev. e 114, 024134"><a class="t" href="https://scholar.google.com/scholar?q=%22Critical%20scaling%20and%20supercritical%20coarsening%20in%20active%20model%20B%2B%22" target="_blank" rel="noopener">Critical scaling and supercritical coarsening in active model B+</a><div class="a">A. Bhowmick, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 114, 024134</em> (2026)</div></li>
+<li data-s="towards a matrix product ansatz in two dimensions c. g. ray, a. banerjee, p. k. mohanty arxiv:2605.20160"><a class="t" href="https://arxiv.org/abs/2605.20160" target="_blank" rel="noopener">Towards a Matrix Product Ansatz in Two Dimensions</a><div class="a">C. G. Ray, A. Banerjee, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:2605.20160</em> (2026)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2025"><div class="yr">2025 <span class="ct">5</span></div><ul class="pubs">
+<li data-s="geometric and nonequilibrium criticality in run-and-tumble particles with competing motility and attraction a. bhowmick, s. mitra, p. k. mohanty phys. rev. e 112, 044129"><a class="t" href="https://scholar.google.com/scholar?q=%22Geometric%20and%20nonequilibrium%20criticality%20in%20run-and-tumble%20particles%20with%20competing%20motility%20and%20attraction%22" target="_blank" rel="noopener">Geometric and nonequilibrium criticality in run-and-tumble particles with competing motility and attraction</a><div class="a">A. Bhowmick, S. Mitra, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 112, 044129</em> (2025)</div></li>
+<li data-s="geometric percolation of spins and spin-dipoles in ashkin-teller model a. banerjee, p. jana, p. k. mohanty phys. rev. b 111, 014403"><a class="t" href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.111.014403" target="_blank" rel="noopener">Geometric percolation of spins and spin-dipoles in Ashkin-Teller model</a><div class="a">A. Banerjee, P. Jana, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. B 111, 014403</em> (2025)</div></li>
+<li data-s="percolation of systems having hyperuniformity or giant number fluctuations s. mitra, i. mukherjee, p. k. mohanty phys. rev. e 112, 014120"><a class="t" href="https://scholar.google.com/scholar?q=%22Percolation%20of%20systems%20having%20hyperuniformity%20or%20giant%20number%20fluctuations%22" target="_blank" rel="noopener">Percolation of systems having hyperuniformity or giant number fluctuations</a><div class="a">S. Mitra, I. Mukherjee, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 112, 014120</em> (2025)</div></li>
+<li data-s="position-momenta uncertainties in classical systems d. k. singh, p. k. mohanty phys. rev. e 112, 054129"><a class="t" href="https://scholar.google.com/scholar?q=%22Position-momenta%20uncertainties%20in%20classical%20systems%22" target="_blank" rel="noopener">Position-momenta uncertainties in classical systems</a><div class="a">D. K. Singh, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 112, 054129</em> (2025)</div></li>
+<li data-s="statistical uncertainties of limit cycle systems in langevin bath d. k. singh, p. k. mohanty arxiv:2502.13111"><a class="t" href="https://arxiv.org/abs/2502.13111" target="_blank" rel="noopener">Statistical Uncertainties of Limit Cycle Systems in Langevin Bath</a><div class="a">D. K. Singh, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:2502.13111</em> (2025)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2024"><div class="yr">2024 <span class="ct">4</span></div><ul class="pubs">
+<li data-s="how motility affects ising transitions c. g. ray, i. mukherjee, p. k. mohanty j. stat. mech. 2024, 093207"><a class="t" href="https://scholar.google.com/scholar?q=%22How%20motility%20affects%20Ising%20transitions%22" target="_blank" rel="noopener">How motility affects Ising transitions</a><div class="a">C. G. Ray, I. Mukherjee, <b>P. K. Mohanty</b></div><div class="v"><em>J. Stat. Mech. 2024, 093207</em> (2024)</div></li>
+<li data-s="hyperuniformity in ashkin-teller model i. mukherjee, p. k. mohanty arxiv:2405.20266"><a class="t" href="https://arxiv.org/abs/2405.20266" target="_blank" rel="noopener">Hyperuniformity in Ashkin-Teller model</a><div class="a">I. Mukherjee, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:2405.20266</em> (2024)</div></li>
+<li data-s="non-reciprocal interactions preserve the universality class of potts model s. k. saha, p. k. mohanty arxiv:2412.19664"><a class="t" href="https://arxiv.org/abs/2412.19664" target="_blank" rel="noopener">Non-reciprocal interactions preserve the universality class of Potts model</a><div class="a">S. K. Saha, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:2412.19664</em> (2024)</div></li>
+<li data-s="site-percolation transition of run-and-tumble particles s. k. saha, a. banerjee, p. k. mohanty soft matter 20, 9503"><a class="t" href="https://pubs.rsc.org/en/content/articlehtml/2024/SM/D4SM00838C" target="_blank" rel="noopener">Site-percolation transition of run-and-tumble particles</a><div class="a">S. K. Saha, A. Banerjee, <b>P. K. Mohanty</b></div><div class="v"><em>Soft Matter 20, 9503</em> (2024)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2023"><div class="yr">2023 <span class="ct">3</span></div><ul class="pubs">
+<li data-s="a unified picture of continuous variation of critical exponents i. mukherjee, p. k. mohanty arxiv preprint"><a class="t" href="https://scholar.google.com/scholar?q=%22A%20unified%20picture%20of%20continuous%20variation%20of%20critical%20exponents%22" target="_blank" rel="noopener">A unified picture of continuous variation of critical exponents</a><div class="a">I. Mukherjee, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv preprint</em> (2023)</div></li>
+<li data-s="hidden superuniversality in systems with continuous variation of critical exponents i. mukherjee, p. k. mohanty phys. rev. b 108, 174417"><a class="t" href="https://scholar.google.com/scholar?q=%22Hidden%20superuniversality%20in%20systems%20with%20continuous%20variation%20of%20critical%20exponents%22" target="_blank" rel="noopener">Hidden superuniversality in systems with continuous variation of critical exponents</a><div class="a">I. Mukherjee, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. B 108, 174417</em> (2023)</div></li>
+<li data-s="many universality classes in an interface model restricted to non-negative heights p. grassberger, d. dhar, p. k. mohanty phys. rev. e 107, 044112"><a class="t" href="https://scholar.google.com/scholar?q=%22Many%20universality%20classes%20in%20an%20interface%20model%20restricted%20to%20non-negative%20heights%22" target="_blank" rel="noopener">Many universality classes in an interface model restricted to non-negative heights</a><div class="a">P. Grassberger, D. Dhar, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 107, 044112</em> (2023)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2022"><div class="yr">2022 <span class="ct">1</span></div><ul class="pubs">
+<li data-s="nonexistence of motility induced phase separation transition in one dimension i. mukherjee, a. raghu, p. k. mohanty arxiv:2208.05937"><a class="t" href="https://arxiv.org/abs/2208.05937" target="_blank" rel="noopener">Nonexistence of motility induced phase separation transition in one dimension</a><div class="a">I. Mukherjee, A. Raghu, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:2208.05937</em> (2022)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2020"><div class="yr">2020 <span class="ct">3</span></div><ul class="pubs">
+<li data-s="effect of surface pinning on magnetic nanostuctures a. sahoo, d. bhattacharya, p. k. mohanty phys. rev. b 101, 064414"><a class="t" href="https://scholar.google.com/scholar?q=%22Effect%20of%20surface%20pinning%20on%20magnetic%20nanostuctures%22" target="_blank" rel="noopener">Effect of surface pinning on magnetic nanostuctures</a><div class="a">A. Sahoo, D. Bhattacharya, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. B 101, 064414</em> (2020)</div></li>
+<li data-s="large structure-dependent room temperature exchange bias in self-assembled bifeo3 nanoparticles s. goswami, a. sahoo, d. bhattacharya, o. karci, p. k. mohanty apl materials 8"><a class="t" href="https://scholar.google.com/scholar?q=%22Large%20structure-dependent%20room%20temperature%20exchange%20bias%20in%20self-assembled%20BiFeO3%20nanoparticles%22" target="_blank" rel="noopener">Large structure-dependent room temperature exchange bias in self-assembled BiFeO3 nanoparticles</a><div class="a">S. Goswami, A. Sahoo, D. Bhattacharya, O. Karci, <b>P. K. Mohanty</b></div><div class="v"><em>APL Materials 8</em> (2020)</div></li>
+<li data-s="steady state of random dynamical systems m. s. gopal, s. banerjee, p. k. mohanty arxiv:2009.08827"><a class="t" href="https://arxiv.org/abs/2009.08827" target="_blank" rel="noopener">Steady State Of Random Dynamical Systems</a><div class="a">M. S. Gopal, S. Banerjee, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:2009.08827</em> (2020)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2018"><div class="yr">2018 <span class="ct">2</span></div><ul class="pubs">
+<li data-s="assisted exchange models in one dimension a. k. chatterjee, p. k. mohanty phys. rev. e 98, 062134"><a class="t" href="https://scholar.google.com/scholar?q=%22Assisted%20exchange%20models%20in%20one%20dimension%22" target="_blank" rel="noopener">Assisted exchange models in one dimension</a><div class="a">A. K. Chatterjee, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 98, 062134</em> (2018)</div></li>
+<li data-s="negative differential mobility in interacting particle systems a. k. chatterjee, u. basu, p. k. mohanty phys. rev. e 97, 052137"><a class="t" href="https://scholar.google.com/scholar?q=%22Negative%20differential%20mobility%20in%20interacting%20particle%20systems%22" target="_blank" rel="noopener">Negative differential mobility in interacting particle systems</a><div class="a">A. K. Chatterjee, U. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 97, 052137</em> (2018)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2017"><div class="yr">2017 <span class="ct">5</span></div><ul class="pubs">
+<li data-s="continuously varying critical exponents beyond weak universality n. khan, p. sarkar, a. midya, p. mandal, p. k. mohanty sci. rep. 7, 45004"><a class="t" href="https://scholar.google.com/scholar?q=%22Continuously%20varying%20critical%20exponents%20beyond%20weak%20universality%22" target="_blank" rel="noopener">Continuously varying critical exponents beyond weak universality</a><div class="a">N. Khan, P. Sarkar, A. Midya, P. Mandal, <b>P. K. Mohanty</b></div><div class="v"><em>Sci. Rep. 7, 45004</em> (2017)</div></li>
+<li data-s="increased expression of apoa1 after neuronal injury may be beneficial for healing m. b. sengupta, s. saha, p. k. mohanty, k. k. mukhopadhyay, d. mukhopadhyay mol. cell. biochem. 424, 45–55"><a class="t" href="https://scholar.google.com/scholar?q=%22Increased%20expression%20of%20ApoA1%20after%20neuronal%20injury%20may%20be%20beneficial%20for%20healing%22" target="_blank" rel="noopener">Increased expression of ApoA1 after neuronal injury may be beneficial for healing</a><div class="a">M. B. Sengupta, S. Saha, <b>P. K. Mohanty</b>, K. K. Mukhopadhyay, D. Mukhopadhyay</div><div class="v"><em>Mol. Cell. Biochem. 424, 45–55</em> (2017)</div></li>
+<li data-s="matrix product states for interacting particles without hardcore constraints a. kumar chatterjee, p. k. mohanty j. phys. a 50, 495001"><a class="t" href="https://scholar.google.com/scholar?q=%22Matrix%20product%20states%20for%20interacting%20particles%20without%20hardcore%20constraints%22" target="_blank" rel="noopener">Matrix product states for interacting particles without hardcore constraints</a><div class="a">A. K. Chatterjee, <b>P. K. Mohanty</b></div><div class="v"><em>J. Phys. A 50, 495001</em> (2017)</div></li>
+<li data-s="multi-chain models of conserved lattice gas a. chatterjee, p. k. mohanty arxiv:1707.09946"><a class="t" href="https://arxiv.org/abs/1707.09946" target="_blank" rel="noopener">Multi-chain models of Conserved Lattice Gas</a><div class="a">A. Chatterjee, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:1707.09946</em> (2017)</div></li>
+<li data-s="zero range and finite range processes with asymmetric rate functions a. kumar chatterjee, p. k. mohanty j. stat. mech. 2017, 093201"><a class="t" href="https://scholar.google.com/scholar?q=%22Zero%20range%20and%20finite%20range%20processes%20with%20asymmetric%20rate%20functions%22" target="_blank" rel="noopener">Zero range and finite range processes with asymmetric rate functions</a><div class="a">A. K. Chatterjee, <b>P. K. Mohanty</b></div><div class="v"><em>J. Stat. Mech. 2017, 093201</em> (2017)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2016"><div class="yr">2016 <span class="ct">3</span></div><ul class="pubs">
+<li data-s="multicritical absorbing phase transition in a class of exactly solvable models a. chatterjee, p. k. mohanty phys. rev. e 94, 062141"><a class="t" href="https://scholar.google.com/scholar?q=%22Multicritical%20absorbing%20phase%20transition%20in%20a%20class%20of%20exactly%20solvable%20models%22" target="_blank" rel="noopener">Multicritical absorbing phase transition in a class of exactly solvable models</a><div class="a">A. Chatterjee, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 94, 062141</em> (2016)</div></li>
+<li data-s="oslo model, hyperuniformity, and the quenched edwards-wilkinson model p. grassberger, d. dhar, p. k. mohanty phys. rev. e 94, 042314"><a class="t" href="https://scholar.google.com/scholar?q=%22Oslo%20model%2C%20hyperuniformity%2C%20and%20the%20quenched%20Edwards-Wilkinson%20model%22" target="_blank" rel="noopener">Oslo model, hyperuniformity, and the quenched Edwards-Wilkinson model</a><div class="a">P. Grassberger, D. Dhar, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 94, 042314</em> (2016)</div></li>
+<li data-s="phase coexistence and spatial correlations in reconstituting k-mer models a. k. chatterjee, b. daga, p. k. mohanty arxiv:1605.03859"><a class="t" href="https://arxiv.org/abs/1605.03859" target="_blank" rel="noopener">Phase coexistence and spatial correlations in reconstituting k-mer models</a><div class="a">A. K. Chatterjee, B. Daga, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:1605.03859</em> (2016)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2015"><div class="yr">2015 <span class="ct">4</span></div><ul class="pubs">
+<li data-s="additivity property and emergence of power laws in nonequilibrium steady states a. das, s. chatterjee, p. pradhan, p. k. mohanty phys. rev. e 92, 052107"><a class="t" href="https://scholar.google.com/scholar?q=%22Additivity%20property%20and%20emergence%20of%20power%20laws%20in%20nonequilibrium%20steady%20states%22" target="_blank" rel="noopener">Additivity property and emergence of power laws in nonequilibrium steady states</a><div class="a">A. Das, S. Chatterjee, P. Pradhan, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 92, 052107</em> (2015)</div></li>
+<li data-s="cluster-factorized steady states in finite range processes a. chatterjee, p. pradhan, p. k. mohanty arxiv:1505.05047"><a class="t" href="https://arxiv.org/abs/1505.05047" target="_blank" rel="noopener">Cluster-factorized steady states in finite range processes</a><div class="a">A. Chatterjee, P. Pradhan, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:1505.05047</em> (2015)</div></li>
+<li data-s="phase separation transition of reconstituting k-mers in one dimension b. daga, p. k. mohanty j. stat. mech. 2015, p04004"><a class="t" href="https://scholar.google.com/scholar?q=%22Phase%20separation%20transition%20of%20reconstituting%20k-mers%20in%20one%20dimension%22" target="_blank" rel="noopener">Phase separation transition of reconstituting k-mers in one dimension</a><div class="a">B. Daga, <b>P. K. Mohanty</b></div><div class="v"><em>J. Stat. Mech. 2015, P04004</em> (2015)</div></li>
+<li data-s="zeroth law and nonequilibrium thermodynamics for steady states in contact s. chatterjee, p. pradhan, p. k. mohanty phys. rev. e 91, 062136"><a class="t" href="https://scholar.google.com/scholar?q=%22Zeroth%20law%20and%20nonequilibrium%20thermodynamics%20for%20steady%20states%20in%20contact%22" target="_blank" rel="noopener">Zeroth law and nonequilibrium thermodynamics for steady states in contact</a><div class="a">S. Chatterjee, P. Pradhan, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 91, 062136</em> (2015)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2014"><div class="yr">2014 <span class="ct">6</span></div><ul class="pubs">
+<li data-s="a microscopic model of ballistic-diffusive crossover d. bagchi, p. k. mohanty j. stat. mech. 2014, p11025"><a class="t" href="https://scholar.google.com/scholar?q=%22A%20microscopic%20model%20of%20ballistic-diffusive%20crossover%22" target="_blank" rel="noopener">A microscopic model of ballistic-diffusive crossover</a><div class="a">D. Bagchi, <b>P. K. Mohanty</b></div><div class="v"><em>J. Stat. Mech. 2014, P11025</em> (2014)</div></li>
+<li data-s="csf proteomics of secondary phase spinal cord injury in human subjects: perturbed molecular pathways post injury m. b. sengupta, m. basu, s. iswarari, k. k. mukhopadhyay, k. p. sardar, b. acharyya, p. k. mohanty, d. mukhopadhyay plos one 9, e110885"><a class="t" href="https://scholar.google.com/scholar?q=%22CSF%20proteomics%20of%20secondary%20phase%20spinal%20cord%20injury%20in%20human%20subjects%3A%20perturbed%20molecular%20pathways%20post%20injury%22" target="_blank" rel="noopener">CSF proteomics of secondary phase spinal cord injury in human subjects: perturbed molecular pathways post injury</a><div class="a">M. B. Sengupta, M. Basu, S. Iswarari, K. K. Mukhopadhyay, K. P. Sardar, B. Acharyya, <b>P. K. Mohanty</b>, D. Mukhopadhyay</div><div class="v"><em>PLoS ONE 9, e110885</em> (2014)</div></li>
+<li data-s="distribution of microrna co-targets exhibit universality across a wide class of species m. basu, n. p. bhattacharyya, p. k. mohanty epl 105, 28007"><a class="t" href="https://scholar.google.com/scholar?q=%22Distribution%20of%20microRNA%20co-targets%20exhibit%20universality%20across%20a%20wide%20class%20of%20species%22" target="_blank" rel="noopener">Distribution of microRNA co-targets exhibit universality across a wide class of species</a><div class="a">M. Basu, N. P. Bhattacharyya, <b>P. K. Mohanty</b></div><div class="v"><em>EPL 105, 28007</em> (2014)</div></li>
+<li data-s="gammalike mass distributions and mass fluctuations in conserved-mass transport processes s. chatterjee, p. pradhan, p. k. mohanty phys. rev. lett. 112, 030601"><a class="t" href="https://scholar.google.com/scholar?q=%22Gammalike%20mass%20distributions%20and%20mass%20fluctuations%20in%20conserved-mass%20transport%20processes%22" target="_blank" rel="noopener">Gammalike mass distributions and mass fluctuations in conserved-mass transport processes</a><div class="a">S. Chatterjee, P. Pradhan, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. Lett. 112, 030601</em> (2014)</div></li>
+<li data-s="self-organised criticality in stochastic sandpiles: connection to directed percolation u. basu, p. k. mohanty epl 108, 60002"><a class="t" href="https://scholar.google.com/scholar?q=%22Self-organised%20criticality%20in%20stochastic%20sandpiles%3A%20Connection%20to%20directed%20percolation%22" target="_blank" rel="noopener">Self-organised criticality in stochastic sandpiles: Connection to directed percolation</a><div class="a">U. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>EPL 108, 60002</em> (2014)</div></li>
+<li data-s="universality splitting in distribution of number of mirna co-targets m. basu, n. p. bhattacharyya, p. k. mohanty syst. synth. biol. 8, 21–26"><a class="t" href="https://scholar.google.com/scholar?q=%22Universality%20splitting%20in%20distribution%20of%20number%20of%20miRNA%20co-targets%22" target="_blank" rel="noopener">Universality splitting in distribution of number of miRNA co-targets</a><div class="a">M. Basu, N. P. Bhattacharyya, <b>P. K. Mohanty</b></div><div class="v"><em>Syst. Synth. Biol. 8, 21–26</em> (2014)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2013"><div class="yr">2013 <span class="ct">2</span></div><ul class="pubs">
+<li data-s="absorbing phase transition in energy exchange models u. basu, m. basu, p. k. mohanty eur. phys. j. b 86, 236"><a class="t" href="https://scholar.google.com/scholar?q=%22Absorbing%20phase%20transition%20in%20energy%20exchange%20models%22" target="_blank" rel="noopener">Absorbing phase transition in energy exchange models</a><div class="a">U. Basu, M. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>Eur. Phys. J. B 86, 236</em> (2013)</div></li>
+<li data-s="comparison of modules of wild type and mutant huntingtin and tp53 protein interaction networks: implications in biological processes and functions m. basu, n. p. bhattacharyya, p. k. mohanty plos one 8, e64838"><a class="t" href="https://scholar.google.com/scholar?q=%22Comparison%20of%20modules%20of%20wild%20type%20and%20mutant%20Huntingtin%20and%20TP53%20protein%20interaction%20networks%3A%20implications%20in%20biological%20processes%20and%20functions%22" target="_blank" rel="noopener">Comparison of modules of wild type and mutant Huntingtin and TP53 protein interaction networks: implications in biological processes and functions</a><div class="a">M. Basu, N. P. Bhattacharyya, <b>P. K. Mohanty</b></div><div class="v"><em>PLoS ONE 8, e64838</em> (2013)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2012"><div class="yr">2012 <span class="ct">4</span></div><ul class="pubs">
+<li data-s="conserved mass models with stickiness and chipping s. bondyopadhyay, p. k. mohanty j. stat. mech. 2012, p07019"><a class="t" href="https://scholar.google.com/scholar?q=%22Conserved%20mass%20models%20with%20stickiness%20and%20chipping%22" target="_blank" rel="noopener">Conserved mass models with stickiness and chipping</a><div class="a">S. Bondyopadhyay, <b>P. K. Mohanty</b></div><div class="v"><em>J. Stat. Mech. 2012, P07019</em> (2012)</div></li>
+<li data-s="fixed-energy sandpiles belong generically to directed percolation m. basu, u. basu, s. bondyopadhyay, p. k. mohanty, h. hinrichsen phys. rev. lett. 109, 015702"><a class="t" href="https://scholar.google.com/scholar?q=%22Fixed-energy%20sandpiles%20belong%20generically%20to%20directed%20percolation%22" target="_blank" rel="noopener">Fixed-energy sandpiles belong generically to directed percolation</a><div class="a">M. Basu, U. Basu, S. Bondyopadhyay, <b>P. K. Mohanty</b>, H. Hinrichsen</div><div class="v"><em>Phys. Rev. Lett. 109, 015702</em> (2012)</div></li>
+<li data-s="restricted exclusion processes without particle conservation flows to directed percolation u. basu, p. k. mohanty epl 99, 66002"><a class="t" href="https://scholar.google.com/scholar?q=%22Restricted%20exclusion%20processes%20without%20particle%20conservation%20flows%20to%20directed%20percolation%22" target="_blank" rel="noopener">Restricted exclusion processes without particle conservation flows to directed percolation</a><div class="a">U. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>EPL 99, 66002</em> (2012)</div></li>
+<li data-s="thermally driven classical heisenberg model in one dimension d. bagchi, p. k. mohanty phys. rev. b 86, 214302"><a class="t" href="https://scholar.google.com/scholar?q=%22Thermally%20driven%20classical%20Heisenberg%20model%20in%20one%20dimension%22" target="_blank" rel="noopener">Thermally driven classical Heisenberg model in one dimension</a><div class="a">D. Bagchi, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. B 86, 214302</em> (2012)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2011"><div class="yr">2011 <span class="ct">9</span></div><ul class="pubs">
+<li data-s="a novel approach to discontinuous bond percolation transition u. basu, m. basu, a. kundu, p. k. mohanty epl 94, 46002"><a class="t" href="https://scholar.google.com/scholar?q=%22A%20novel%20approach%20to%20discontinuous%20bond%20percolation%20transition%22" target="_blank" rel="noopener">A novel approach to discontinuous bond percolation transition</a><div class="a">U. Basu, M. Basu, A. Kundu, <b>P. K. Mohanty</b></div><div class="v"><em>EPL 94, 46002</em> (2011)</div></li>
+<li data-s="absorbing phase transition in a four-state predator–prey model in one dimension r. chatterjee, p. k. mohanty, a. basu j. stat. mech. 2011, l05001"><a class="t" href="https://scholar.google.com/scholar?q=%22Absorbing%20phase%20transition%20in%20a%20four-state%20predator%E2%80%93prey%20model%20in%20one%20dimension%22" target="_blank" rel="noopener">Absorbing phase transition in a four-state predator–prey model in one dimension</a><div class="a">R. Chatterjee, <b>P. K. Mohanty</b>, A. Basu</div><div class="v"><em>J. Stat. Mech. 2011, L05001</em> (2011)</div></li>
+<li data-s="absorbing state phase transition in presence of conserved continuous local field m. basu, u. gayen, p. k. mohanty arxiv:1102.1631"><a class="t" href="https://arxiv.org/abs/1102.1631" target="_blank" rel="noopener">Absorbing state phase transition in presence of conserved continuous local field</a><div class="a">M. Basu, U. Gayen, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:1102.1631</em> (2011)</div></li>
+<li data-s="bimodal response in periodically driven diffusive systems u. basu, d. chaudhuri, p. k. mohanty phys. rev. e 83, 031115"><a class="t" href="https://scholar.google.com/scholar?q=%22Bimodal%20response%20in%20periodically%20driven%20diffusive%20systems%22" target="_blank" rel="noopener">Bimodal response in periodically driven diffusive systems</a><div class="a">U. Basu, D. Chaudhuri, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 83, 031115</em> (2011)</div></li>
+<li data-s="comments on&quot; critical study on the absorbing phase transition in a four-state predator-prey model in one dimension&quot; p. k. mohanty, r. chatterjee, a. basu arxiv:1109.4523"><a class="t" href="https://arxiv.org/abs/1109.4523" target="_blank" rel="noopener">Comments on&quot; Critical Study on the Absorbing Phase Transition in a Four-State Predator-Prey Model in One Dimension&quot;</a><div class="a"><b>P. K. Mohanty</b>, R. Chatterjee, A. Basu</div><div class="v"><span class="pre">preprint</span> <em>arXiv:1109.4523</em> (2011)</div></li>
+<li data-s="driven k-mers: correlations in space and time s. gupta, m. barma, u. basu, p. k. mohanty phys. rev. e 84, 041102"><a class="t" href="https://scholar.google.com/scholar?q=%22Driven%20k-mers%3A%20Correlations%20in%20space%20and%20time%22" target="_blank" rel="noopener">Driven k-mers: Correlations in space and time</a><div class="a">S. Gupta, M. Barma, U. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 84, 041102</em> (2011)</div></li>
+<li data-s="modules of human micro-rna co-target network m. basu, n. p. bhattacharyya, p. k. mohanty j. phys.: conf. ser. 297, 012002"><a class="t" href="https://scholar.google.com/scholar?q=%22Modules%20of%20human%20micro-RNA%20co-target%20network%22" target="_blank" rel="noopener">Modules of human micro-RNA co-target network</a><div class="a">M. Basu, N. P. Bhattacharyya, <b>P. K. Mohanty</b></div><div class="v"><em>J. Phys.: Conf. Ser. 297, 012002</em> (2011)</div></li>
+<li data-s="phase separation transition in a driven diffusive system with anti-ferromagnetic interaction a. kundu, p. k. mohanty physica a 390, 1585–1590"><a class="t" href="https://scholar.google.com/scholar?q=%22Phase%20separation%20transition%20in%20a%20driven%20diffusive%20system%20with%20anti-ferromagnetic%20interaction%22" target="_blank" rel="noopener">Phase separation transition in a driven diffusive system with anti-ferromagnetic interaction</a><div class="a">A. Kundu, <b>P. K. Mohanty</b></div><div class="v"><em>Physica A 390, 1585–1590</em> (2011)</div></li>
+<li data-s="phase transition in an exactly solvable extinction model d. bagchi, p. k. mohanty phys. rev. e 84, 061921"><a class="t" href="https://scholar.google.com/scholar?q=%22Phase%20transition%20in%20an%20exactly%20solvable%20extinction%20model%22" target="_blank" rel="noopener">Phase transition in an exactly solvable extinction model</a><div class="a">D. Bagchi, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 84, 061921</em> (2011)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2010"><div class="yr">2010 <span class="ct">5</span></div><ul class="pubs">
+<li data-s="asymmetric simple exclusion process on a cayley tree m. basu, p. k. mohanty j. stat. mech. 2010, p10014"><a class="t" href="https://scholar.google.com/scholar?q=%22Asymmetric%20simple%20exclusion%20process%20on%20a%20Cayley%20tree%22" target="_blank" rel="noopener">Asymmetric simple exclusion process on a Cayley tree</a><div class="a">M. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>J. Stat. Mech. 2010, P10014</em> (2010)</div></li>
+<li data-s="discontinuous absorbing state transition in (1+1) dimension u. basu, m. basu, p. k. mohanty arxiv:1010.2007"><a class="t" href="https://arxiv.org/abs/1010.2007" target="_blank" rel="noopener">Discontinuous Absorbing State Transition in (1+1) Dimension</a><div class="a">U. Basu, M. Basu, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:1010.2007</em> (2010)</div></li>
+<li data-s="spatial correlations in exclusion models corresponding to the zero-range process u. basu, p. k. mohanty j. stat. mech. 2010, l03006"><a class="t" href="https://scholar.google.com/scholar?q=%22Spatial%20correlations%20in%20exclusion%20models%20corresponding%20to%20the%20zero-range%20process%22" target="_blank" rel="noopener">Spatial correlations in exclusion models corresponding to the zero-range process</a><div class="a">U. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>J. Stat. Mech. 2010, L03006</em> (2010)</div></li>
+<li data-s="totally asymmetric exclusion process on a ring with internal degrees of freedom u. basu, p. k. mohanty phys. rev. e 82, 041117"><a class="t" href="https://scholar.google.com/scholar?q=%22Totally%20asymmetric%20exclusion%20process%20on%20a%20ring%20with%20internal%20degrees%20of%20freedom%22" target="_blank" rel="noopener">Totally asymmetric exclusion process on a ring with internal degrees of freedom</a><div class="a">U. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 82, 041117</em> (2010)</div></li>
+<li data-s="two-dimensional random walk in a bounded domain m. basu, p. k. mohanty epl 90, 50005"><a class="t" href="https://scholar.google.com/scholar?q=%22Two-dimensional%20random%20walk%20in%20a%20bounded%20domain%22" target="_blank" rel="noopener">Two-dimensional random walk in a bounded domain</a><div class="a">M. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>EPL 90, 50005</em> (2010)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2009"><div class="yr">2009 <span class="ct">5</span></div><ul class="pubs">
+<li data-s="active–absorbing-state phase transition beyond directed percolation: a class of exactly solvable models u. basu, p. k. mohanty phys. rev. e 79, 041143"><a class="t" href="https://scholar.google.com/scholar?q=%22Active%E2%80%93absorbing-state%20phase%20transition%20beyond%20directed%20percolation%3A%20A%20class%20of%20exactly%20solvable%20models%22" target="_blank" rel="noopener">Active–absorbing-state phase transition beyond directed percolation: A class of exactly solvable models</a><div class="a">U. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 79, 041143</em> (2009)</div></li>
+<li data-s="dynamics of path aggregation in the presence of turnover d. chaudhuri, p. borowski, p. k. mohanty, m. zapotocky epl 87, 20003"><a class="t" href="https://scholar.google.com/scholar?q=%22Dynamics%20of%20path%20aggregation%20in%20the%20presence%20of%20turnover%22" target="_blank" rel="noopener">Dynamics of path aggregation in the presence of turnover</a><div class="a">D. Chaudhuri, P. Borowski, <b>P. K. Mohanty</b>, M. Zapotocky</div><div class="v"><em>EPL 87, 20003</em> (2009)</div></li>
+<li data-s="microrna interaction network in human: implications of clustered microrna in biological pathways and genetic diseases s. mookherjee, m. sinha, s. mukhopadhyay, n. p. bhattacharyya, p. k. mohanty online j. bioinformatics 10, 280–296"><a class="t" href="https://scholar.google.com/scholar?q=%22MicroRNA%20Interaction%20network%20in%20human%3A%20implications%20of%20clustered%20microRNA%20in%20biological%20pathways%20and%20genetic%20diseases%22" target="_blank" rel="noopener">MicroRNA Interaction network in human: implications of clustered microRNA in biological pathways and genetic diseases</a><div class="a">S. Mookherjee, M. Sinha, S. Mukhopadhyay, N. P. Bhattacharyya, <b>P. K. Mohanty</b></div><div class="v"><em>Online J. Bioinformatics 10, 280–296</em> (2009)</div></li>
+<li data-s="phase diagram of the abc model on an interval a. ayyer, e. a. carlen, j. l. lebowitz, p. k. mohanty, d. mukamel, e. r. speer j. stat. phys. 137, 1166–1204"><a class="t" href="https://scholar.google.com/scholar?q=%22Phase%20diagram%20of%20the%20ABC%20model%20on%20an%20interval%22" target="_blank" rel="noopener">Phase diagram of the ABC model on an interval</a><div class="a">A. Ayyer, E. A. Carlen, J. L. Lebowitz, <b>P. K. Mohanty</b>, D. Mukamel, E. R. Speer</div><div class="v"><em>J. Stat. Phys. 137, 1166–1204</em> (2009)</div></li>
+<li data-s="stochastic modeling of single molecule michaelis menten kinetics m. basu, p. k. mohanty arxiv:0901.2844"><a class="t" href="https://arxiv.org/abs/0901.2844" target="_blank" rel="noopener">Stochastic modeling of single molecule Michaelis Menten kinetics</a><div class="a">M. Basu, <b>P. K. Mohanty</b></div><div class="v"><span class="pre">preprint</span> <em>arXiv:0901.2844</em> (2009)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2008"><div class="yr">2008 <span class="ct">2</span></div><ul class="pubs">
+<li data-s="analytical results for stochastically growing networks: connection to the zero-range process p. k. mohanty, s. jalan phys. rev. e 77, 045102"><a class="t" href="https://scholar.google.com/scholar?q=%22Analytical%20results%20for%20stochastically%20growing%20networks%3A%20Connection%20to%20the%20zero-range%20process%22" target="_blank" rel="noopener">Analytical results for stochastically growing networks: Connection to the zero-range process</a><div class="a"><b>P. K. Mohanty</b>, S. Jalan</div><div class="v"><em>Phys. Rev. E 77, 045102</em> (2008)</div></li>
+<li data-s="modeling wealth distribution in growing markets u. basu, p. k. mohanty eur. phys. j. b 65, 585"><a class="t" href="https://scholar.google.com/scholar?q=%22Modeling%20wealth%20distribution%20in%20growing%20markets%22" target="_blank" rel="noopener">Modeling wealth distribution in growing markets</a><div class="a">U. Basu, <b>P. K. Mohanty</b></div><div class="v"><em>Eur. Phys. J. B 65, 585</em> (2008)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2007"><div class="yr">2007 <span class="ct">3</span></div><ul class="pubs">
+<li data-s="critical behavior of sandpile models with sticky grains p. k. mohanty, d. dhar physica a 384, 34–38"><a class="t" href="https://scholar.google.com/scholar?q=%22Critical%20behavior%20of%20sandpile%20models%20with%20sticky%20grains%22" target="_blank" rel="noopener">Critical behavior of sandpile models with sticky grains</a><div class="a"><b>P. K. Mohanty</b>, D. Dhar</div><div class="v"><em>Physica A 384, 34–38</em> (2007)</div></li>
+<li data-s="driven diffusive systems of active filament bundles p. k. mohanty, k. kruse j. stat. phys. 128, 95–110"><a class="t" href="https://scholar.google.com/scholar?q=%22Driven%20diffusive%20systems%20of%20active%20filament%20bundles%22" target="_blank" rel="noopener">Driven diffusive systems of active filament bundles</a><div class="a"><b>P. K. Mohanty</b>, K. Kruse</div><div class="v"><em>J. Stat. Phys. 128, 95–110</em> (2007)</div></li>
+<li data-s="why only few are so successful? p. k. mohanty physica a 384, 75–79"><a class="t" href="https://scholar.google.com/scholar?q=%22Why%20only%20few%20are%20so%20successful%3F%22" target="_blank" rel="noopener">Why only few are so successful?</a><div class="a"><b>P. K. Mohanty</b></div><div class="v"><em>Physica A 384, 75–79</em> (2007)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2006"><div class="yr">2006 <span class="ct">2</span></div><ul class="pubs">
+<li data-s="a new approach to partial synchronization in globally coupled rotators p. k. mohanty, a. politi j. phys. a 39, l415–l421"><a class="t" href="https://scholar.google.com/scholar?q=%22A%20new%20approach%20to%20partial%20synchronization%20in%20globally%20coupled%20rotators%22" target="_blank" rel="noopener">A new approach to partial synchronization in globally coupled rotators</a><div class="a"><b>P. K. Mohanty</b>, A. Politi</div><div class="v"><em>J. Phys. A 39, L415–L421</em> (2006)</div></li>
+<li data-s="generic features of the wealth distribution in ideal-gas-like markets p. k. mohanty phys. rev. e 74, 011117"><a class="t" href="https://scholar.google.com/scholar?q=%22Generic%20features%20of%20the%20wealth%20distribution%20in%20ideal-gas-like%20markets%22" target="_blank" rel="noopener">Generic features of the wealth distribution in ideal-gas-like markets</a><div class="a"><b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 74, 011117</em> (2006)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2004"><div class="yr">2004 <span class="ct">2</span></div><ul class="pubs">
+<li data-s="first-order synchronization transition in locally coupled maps p. k. mohanty phys. rev. e 70, 045202"><a class="t" href="https://scholar.google.com/scholar?q=%22First-order%20synchronization%20transition%20in%20locally%20coupled%20maps%22" target="_blank" rel="noopener">First-order synchronization transition in locally coupled maps</a><div class="a"><b>P. K. Mohanty</b></div><div class="v"><em>Phys. Rev. E 70, 045202</em> (2004)</div></li>
+<li data-s="modelling one-dimensional driven diffusive systems by the zero-range process m. r. evans, e. levine, p. k. mohanty, d. mukamel eur. phys. j. b 41, 223–230"><a class="t" href="https://scholar.google.com/scholar?q=%22Modelling%20one-dimensional%20driven%20diffusive%20systems%20by%20the%20Zero-Range%20Process%22" target="_blank" rel="noopener">Modelling one-dimensional driven diffusive systems by the Zero-Range Process</a><div class="a">M. R. Evans, E. Levine, <b>P. K. Mohanty</b>, D. Mukamel</div><div class="v"><em>Eur. Phys. J. B 41, 223–230</em> (2004)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2002"><div class="yr">2002 <span class="ct">1</span></div><ul class="pubs">
+<li data-s="generic sandpile models have directed percolation exponents p. k. mohanty, d. dhar phys. rev. lett. 89, 104303"><a class="t" href="https://scholar.google.com/scholar?q=%22Generic%20sandpile%20models%20have%20directed%20percolation%20exponents%22" target="_blank" rel="noopener">Generic sandpile models have directed percolation exponents</a><div class="a"><b>P. K. Mohanty</b>, D. Dhar</div><div class="v"><em>Phys. Rev. Lett. 89, 104303</em> (2002)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="2000"><div class="yr">2000 <span class="ct">1</span></div><ul class="pubs">
+<li data-s="transport in multi-chain models of interacting fermions p. k. mohanty, s. rao j. phys. a 33, 7363–7378"><a class="t" href="https://scholar.google.com/scholar?q=%22Transport%20in%20multi-chain%20models%20of%20interacting%20fermions%22" target="_blank" rel="noopener">Transport in multi-chain models of interacting fermions</a><div class="a"><b>P. K. Mohanty</b>, S. Rao</div><div class="v"><em>J. Phys. A 33, 7363–7378</em> (2000)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="1999"><div class="yr">1999 <span class="ct">1</span></div><ul class="pubs">
+<li data-s="exactly solvable fermionic n-band models r. k. ghosh, p. k. mohanty, s. rao j. phys. a 32, 4343–4350"><a class="t" href="https://scholar.google.com/scholar?q=%22Exactly%20solvable%20fermionic%20N-band%20models%22" target="_blank" rel="noopener">Exactly solvable fermionic N-band models</a><div class="a">R. K. Ghosh, <b>P. K. Mohanty</b>, S. Rao</div><div class="v"><em>J. Phys. A 32, 4343–4350</em> (1999)</div></li>
+</ul></div>
+<div class="yrgroup" data-year="1998"><div class="yr">1998 <span class="ct">2</span></div><ul class="pubs">
+<li data-s="coupled bands and symmetry of order parameter in doped ybco systems p. k. mohanty, a. taraphder high temperature superconductivity: ten years after its discovery, 378"><a class="t" href="https://scholar.google.com/scholar?q=%22Coupled%20Bands%20and%20Symmetry%20of%20Order%20Parameter%20in%20Doped%20YBCO%20Systems%22" target="_blank" rel="noopener">Coupled Bands and Symmetry of Order Parameter in Doped YBCO Systems</a><div class="a"><b>P. K. Mohanty</b>, A. Taraphder</div><div class="v"><em>High Temperature Superconductivity: Ten Years After Its Discovery, 378</em> (1998)</div></li>
+<li data-s="the order parameter symmetry of doped yba2cu3o4 p. k. mohanty, a. taraphder j. phys.: condens. matter 10, 10621"><a class="t" href="https://scholar.google.com/scholar?q=%22The%20order%20parameter%20symmetry%20of%20doped%20YBa2Cu3O4%22" target="_blank" rel="noopener">The order parameter symmetry of doped YBa2Cu3O4</a><div class="a"><b>P. K. Mohanty</b>, A. Taraphder</div><div class="v"><em>J. Phys.: Condens. Matter 10, 10621</em> (1998)</div></li>
+</ul></div>
+      </div>
+      <p class="label" id="pubNone" hidden>No articles match that search.</p>
+      <p class="more"><a class="btn" href="https://scholar.google.com/citations?hl=en&amp;user=CHrmyQIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Citations on Google Scholar ↗</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="talks">
+  <div class="wrap">
+    <div class="side"><h2>Talks &amp; lectures</h2><span class="label">On video</span></div>
+    <div>
+      <div class="series">
+        <div class="talk">
+          <span class="label">Lecture series · 6 sessions</span>
+          <span class="ttl">Matrix product ansatz</span>
+          <span class="meta">Bangalore School on Statistical Physics XV, Raman Research Institute, September 2024</span>
+          <div class="parts">
+            <a href="https://www.youtube.com/watch?v=Pk0kC20mfTI" target="_blank" rel="noopener">Part 1</a>
+            <a href="https://www.youtube.com/watch?v=8mlgNED39a8" target="_blank" rel="noopener">Part 2</a>
+            <a href="https://www.youtube.com/watch?v=pyy17gduHTU" target="_blank" rel="noopener">Part 3</a>
+            <a href="https://www.youtube.com/watch?v=Vv1rtaYlBWY" target="_blank" rel="noopener">Part 4</a>
+            <a href="https://www.youtube.com/watch?v=oeNg3Mxbzmo" target="_blank" rel="noopener">Part 5</a>
+            <a href="https://www.youtube.com/watch?v=gbmBUgsj-3g" target="_blank" rel="noopener">Part 6</a>
+          </div>
+        </div>
+        <a class="talk" href="https://www.youtube.com/watch?v=lHJ7NqIljtk&amp;list=PLHj8FDqJ7gWpdnv7fJNSl1qp_G1daRW7y" target="_blank" rel="noopener">
+          <span class="label">Lecture series · 8 lectures</span>
+          <span class="ttl">Non-equilibrium statistical mechanics</span>
+          <span class="meta">Science Academies’ Refresher Course on Statistical Physics, RKMVERI, Belur Math, December 2018</span>
+          <span class="go">Open playlist ↗</span>
+        </a>
+      </div>
+
+      <h3 class="h3sub">Talks</h3>
+      <div class="talks">
+        <a class="talk" href="https://www.youtube.com/watch?v=4chvE9JYtRk" target="_blank" rel="noopener">
+          <span class="ttl">From micro to macro: a statistical journey through nature</span>
+          <span class="meta">Summer School for Women in Physics, ICTS Bengaluru · June 2025</span>
+          <span class="go">Watch ↗</span>
+        </a>
+        <a class="talk" href="https://www.youtube.com/watch?v=ImyQsAJrsF8" target="_blank" rel="noopener">
+          <span class="ttl">Nonexistence of MIPS phase in one dimension</span>
+          <span class="meta">Statistical Physics of Complex Systems, ICTS Bengaluru · December 2022</span>
+          <span class="go">Watch ↗</span>
+        </a>
+        <a class="talk" href="https://www.youtube.com/watch?v=xh_NnY57Ezw" target="_blank" rel="noopener">
+          <span class="ttl">Clipped linear interfaces</span>
+          <span class="meta">Indian Statistical Physics Community Meeting, ICTS Bengaluru · February 2019</span>
+          <span class="go">Watch ↗</span>
+        </a>
+        <a class="talk" href="https://www.youtube.com/watch?v=0Q6CyLeju0s" target="_blank" rel="noopener">
+          <span class="ttl">Universality in sandpile models</span>
+          <span class="meta">Universality in Random Structures, ICTS Bengaluru · February 2019</span>
+          <span class="go">Watch ↗</span>
+        </a>
+        <a class="talk" href="https://www.youtube.com/watch?v=2ABFvuea1SU" target="_blank" rel="noopener">
+          <span class="ttl">Random walkers: diffusive modes of transport</span>
+          <span class="meta">Discussion Meeting on Random Walks, RKMVERI, Belur Math · January 2019</span>
+          <span class="go">Watch ↗</span>
+        </a>
+        <a class="talk" href="https://www.youtube.com/watch?v=u0hKTE4QML4" target="_blank" rel="noopener">
+          <span class="ttl">Negative mobility in interacting particle systems</span>
+          <span class="meta">Indian Statistical Physics Community Meeting, ICTS Bengaluru · February 2018</span>
+          <span class="go">Watch ↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="group">
+  <div class="wrap">
+    <div class="side"><h2>Students</h2><span class="label">Supervised</span></div>
+    <div class="cols">
+      <div>
+        <div class="label">PhD theses</div>
+        <ul class="people">
+          <li><span class="n">Urna Basu</span> <span class="yrp">2013</span><br><span class="now">Associate Professor, S. N. Bose Centre, Kolkata</span></li>
+          <li><span class="n">Debarshee Bagchi</span> <span class="yrp">2014</span><br><span class="now">Postdoc, North Carolina, USA</span></li>
+          <li><span class="n">Mahashweta Basu</span> <span class="yrp">2015</span><br><span class="now">Research Faculty, Univ. of Maryland, USA</span></li>
+          <li><span class="n">Sourish Bandyopadhyay</span> <span class="yrp">2015</span><br><span class="now">Meteorological Scientist, Pune</span></li>
+          <li><span class="n">Bijoy Daga</span> <span class="yrp">2017</span><br><span class="now">Postdoc, Duke University, USA</span></li>
+          <li><span class="n">Amit K. Chatterjee</span> <span class="yrp">2019</span><br><span class="now">Postdoc, ICTS Bengaluru</span></li>
+          <li><span class="n">Arijit Chatterjee</span> <span class="yrp">2019</span><br><span class="now">Lecturer, Kolkata</span></li>
+          <li><span class="n">Indranil Mukherjee</span><br><span class="now">ICTS Bengaluru</span></li>
+          <li><span class="n">Abir Bhowmick</span> <span class="yrp">ongoing</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">MS theses · went on to a PhD at</div>
+        <ul class="people">
+          <li><span class="n">Aikya Banerjee</span> <span class="yrp">2025</span> · <span class="now">University of Oxford</span></li>
+          <li><span class="n">Akash Kumar</span> <span class="yrp">2025</span> · <span class="now">Université Côte d’Azur</span></li>
+          <li><span class="n">Dipesh K. Singh</span> <span class="yrp">2025</span> · <span class="now">SISSA, Trieste</span></li>
+          <li><span class="n">Soumya Kanti Saha</span> <span class="yrp">2024</span> · <span class="now">Univ. of Mainz</span></li>
+          <li><span class="n">Anchit Bhair</span> <span class="yrp">2024</span> · <span class="now">IISER Pune</span></li>
+          <li><span class="n">Rudraksh Agrawal</span> <span class="yrp">2024</span></li>
+          <li><span class="n">Chandraniva Guha Ray</span> <span class="yrp">2023</span> · <span class="now">MPI-CBG, Dresden</span></li>
+          <li><span class="n">Adarsh Raghu</span> <span class="yrp">2022</span> · <span class="now">King’s College London</span></li>
+          <li><span class="n">Vedanth Sriram</span> <span class="yrp">2022</span> · <span class="now">Univ. of Maryland</span></li>
+          <li><span class="n">Kartik Chhajed</span> <span class="yrp">2021</span> · <span class="now">MPI-PKS, Dresden</span></li>
+          <li><span class="n">Shesha Gopal M. S.</span> <span class="yrp">2020</span> · <span class="now">Univ. of Luxembourg</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="career">
+  <div class="wrap">
+    <div class="side"><h2>Career</h2><span class="label">Positions</span></div>
+    <ol class="tl">
+      <li class="now"><span class="when">Dec 2019 –</span><span class="what"><strong>Professor</strong>, Dept. of Physical Sciences, IISER Kolkata</span></li>
+      <li><span class="when">2005 – 2019</span><span class="what"><strong>Associate Professor → Professor</strong>, Condensed Matter Physics Division, Saha Institute of Nuclear Physics, Kolkata</span></li>
+      <li><span class="when">2014 – 2015</span><span class="what"><strong>Visiting Professor</strong>, Max Planck Institute for the Physics of Complex Systems, Dresden</span></li>
+      <li><span class="when">2004 – 2005</span><span class="what"><strong>Visiting Scientist</strong>, MPI-PKS, Dresden</span></li>
+      <li><span class="when">2002 – 2004</span><span class="what"><strong>Feinberg Fellow</strong>, Weizmann Institute of Science, Israel</span></li>
+      <li><span class="when">2000 – 2002</span><span class="what"><strong>Postdoctoral Fellow</strong>, Tata Institute of Fundamental Research, Mumbai</span></li>
+      <li><span class="when">2000</span><span class="what"><strong>PhD</strong>, Harish-Chandra Research Institute, Allahabad</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="service">
+  <div class="wrap">
+    <div class="side"><h2>Teaching &amp; service</h2></div>
+    <div class="kv">
+      <div>
+        <h3>Courses at IISER Kolkata</h3>
+        <div class="chips">
+          <span class="chip">Mathematical Methods · PH2204</span>
+          <span class="chip">Statistical Mechanics · PH3201</span>
+          <span class="chip">Nonlinear Dynamics · PH4104</span>
+          <span class="chip">Biophysics · PH4108</span>
+          <span class="chip">Advanced Statistical Mechanics · PH4202</span>
+        </div>
+      </div>
+      <div>
+        <h3>Editorial work</h3>
+        <p>Associate Editor, <em>Frontiers in Physics</em>. Guest editor, <em>Physica A</em> 384(1). Referee for Phys. Rev. Lett., Phys. Rev. E, J. Stat. Mech., J. Stat. Phys., J. Phys. A, Physica A, Eur. Phys. J. B, Int. J. Mod. Phys. and Pramana.</p>
+      </div>
+      <div>
+        <h3>Meetings organised</h3>
+        <p>STATPHYS-Kolkata VI (convenor), VIII, XII and XIII (2026); RTCM I and II; KOLSYSBIO 2013 (convenor); Low-Dimensional Quantum Systems, HRI 2017; Statistical Physics Summer School, S. N. Bose Centre 2018; Summer School for Women in Physics, ICTS 2025.</p>
+      </div>
+      <div>
+        <h3>Research grants</h3>
+        <p>SERB MATRICS: unusual fluctuations around non-equilibrium states (2023–25). SERB TARE: rare events in synchronization (2018–21). SERB: additivity and thermodynamics of mass transport (2015–18). CEFIPRA: correlations in extended systems (2012–14).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="side"><h2>Contact</h2></div>
+    <div class="contact">
+      <div>
+        <div class="label">Email</div>
+        <div class="mail" style="margin-top:.4rem">
+          <code id="email">pkmohanty@iiserkol.ac.in</code>
+          <button class="btn" id="copyEmail" type="button">Copy</button>
+          <span class="toast" id="copied" hidden>Copied</span>
+        </div>
+        <p style="margin:1rem 0 0">Prospective PhD, MS and summer students interested in statistical physics are welcome to write.</p>
+      </div>
+      <div>
+        <div class="label">Address</div>
+        <address style="margin-top:.4rem">Department of Physical Sciences<br>Indian Institute of Science Education and Research Kolkata<br>Mohanpur, Nadia 741246<br>West Bengal, India</address>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="label">P. K. Mohanty · IISER Kolkata</span>
+    <span class="label">Updated 28 October 2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* Lattice gas of run-and-tumble particles with exclusion: each particle moves along its heading if the target site is empty, and tumbles to a random heading with small probability. Persistence plus exclusion produces jammed clusters. */
+  const cv=document.getElementById('lg'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DIRS=[[1,0],[-1,0],[0,1],[0,-1]];
+  let W,H,cell,grid,parts,colors,running=!reduce,last=0;
+  function readColors(){const s=getComputedStyle(document.documentElement);colors={p:s.getPropertyValue('--particle').trim(),h:s.getPropertyValue('--particle-hot').trim()};}
+  function setup(){
+    const r=cv.getBoundingClientRect(), dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cell=r.width<500?7:9; W=Math.floor(r.width/cell); H=Math.floor(r.height/cell);
+    grid=new Int32Array(W*H).fill(-1); parts=[];
+    const n=Math.floor(W*H*0.22);
+    while(parts.length<n){const x=Math.random()*W|0,y=Math.random()*H|0;if(grid[y*W+x]<0){grid[y*W+x]=parts.length;parts.push({x,y,d:Math.random()*4|0});}}
+  }
+  function step(){
+    for(let k=0;k<parts.length;k++){
+      const p=parts[(Math.random()*parts.length)|0];
+      if(Math.random()<0.02){p.d=Math.random()*4|0;continue;}
+      const nx=(p.x+DIRS[p.d][0]+W)%W, ny=(p.y+DIRS[p.d][1]+H)%H;
+      if(grid[ny*W+nx]<0){grid[ny*W+nx]=grid[p.y*W+p.x];grid[p.y*W+p.x]=-1;p.x=nx;p.y=ny;}
+    }
+  }
+  function draw(){
+    const r=cv.getBoundingClientRect(); ctx.clearRect(0,0,r.width,r.height);
+    const rad=cell*0.34;
+    for(const p of parts){
+      // a particle with occupied forward site is "jammed": draw in accent
+      const nx=(p.x+DIRS[p.d][0]+W)%W, ny=(p.y+DIRS[p.d][1]+H)%H;
+      ctx.fillStyle=grid[ny*W+nx]>=0?colors.h:colors.p;
+      ctx.beginPath(); ctx.arc(p.x*cell+cell/2,p.y*cell+cell/2,rad,0,Math.PI*2); ctx.fill();
+    }
+  }
+  function loop(t){ if(running){ if(t-last>60){step();draw();last=t;} requestAnimationFrame(loop);} }
+  readColors(); setup(); for(let i=0;i<120;i++) step(); draw();
+  const btn=document.getElementById('lgToggle');
+  btn.textContent=running?'Pause':'Play';
+  btn.addEventListener('click',()=>{running=!running;btn.textContent=running?'Pause':'Play';if(running)requestAnimationFrame(loop);});
+  if(running) requestAnimationFrame(loop);
+  let rt; window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{setup();for(let i=0;i<120;i++)step();draw();},150);});
+  const mq=window.matchMedia('(prefers-color-scheme: dark)');
+  const recolor=()=>{readColors();draw();};
+  mq.addEventListener&&mq.addEventListener('change',recolor);
+  new MutationObserver(recolor).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+  /* Copy email */
+  const copyBtn=document.getElementById('copyEmail'), toast=document.getElementById('copied'), email=document.getElementById('email');
+  copyBtn.addEventListener('click',()=>{
+    const done=()=>{toast.hidden=false;setTimeout(()=>toast.hidden=true,1800);};
+    const select=()=>{const r=document.createRange();r.selectNodeContents(email);const s=getSelection();s.removeAllRanges();s.addRange(r);};
+    try{navigator.clipboard.writeText(email.textContent).then(done,select);}catch(e){select();}
+  });
+  /* Publication search */
+  const q=document.getElementById('pubSearch'), cnt=document.getElementById('pubCount'), none=document.getElementById('pubNone');
+  const items=[...document.querySelectorAll('#pubList li')], groups=[...document.querySelectorAll('#pubList .yrgroup')];
+  q.addEventListener('input',()=>{
+    const terms=q.value.toLowerCase().trim().split(/\s+/).filter(Boolean); let shown=0;
+    items.forEach(li=>{const ok=terms.every(t=>li.dataset.s.includes(t)); li.hidden=!ok; if(ok) shown++;});
+    groups.forEach(g=>{g.hidden=!g.querySelector('li:not([hidden])');});
+    cnt.textContent=terms.length?`${shown} of ${items.length} articles`:`${items.length} articles`;
+    none.hidden=shown>0;
+  });
+})();
+</script>
+</body>
+</html>
